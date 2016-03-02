@@ -1,8 +1,8 @@
 #! /bin/tcsh
 #SBATCH -p batch
-#SBATCH -n 16
+#SBATCH -n 8
 #SBATCH --time=10:00:00
-#SBATCH --gres=gpu:4
+#SBATCH --gres=gpu:1
 #SBATCH --mem=55GB
 
 module load intel/2015c
@@ -58,8 +58,8 @@ set reportfile = ${reportfolder}${jobid}.out
     # set reportfile = ${reportdir}"$sm[${ism}]/report"$jobid".out"
     mkdir -p ${reportfile}
     rm ${reportfile} -rf
-    echo `date`
-    mpirun -np 16 --mca btl ^openib ${colanewgpu}$exe <<EOF > ${reportfile}
+    echo 'starting '`date`
+    mpirun -np 8 --mca btl ^openib ${colanewgpu}$exe <<EOF > ${reportfile}
 ${curdir}${jobid}
 EOF
 
@@ -73,5 +73,6 @@ ${curdir}${jobid}
 EOF
 	exit 1
     endif
+    echo 'finished '`date`
 
-ssh -x a1193348@${mach} "python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'twoptprop' $ism "
+python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'twoptprop' $ism

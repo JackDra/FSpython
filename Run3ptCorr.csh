@@ -1,9 +1,8 @@
 #! /bin/tcsh
-#SBATCH -A a1193348
 #SBATCH -p batch
-#SBATCH -n 16
+#SBATCH -n 8
 #SBATCH --time=10:00:00
-#SBATCH --gres=gpu:4
+#SBATCH --gres=gpu:1
 #SBATCH --mem=55GB
 
 module load intel/2015c
@@ -61,11 +60,11 @@ endif
 set reportfolder = /data/cssm/jdragos/reports/${mach}/
 set reportfile = ${reportfolder}${jobid}.out
 
-    rm ${reportfile}
-    mkdir -p ${reportfolder}
+    mkdir -p ${reportfile}
+    rm ${reportfile} -rf
     echo "mpirun 3 point GMA${Projector} ${DS}, tsink = ${tsink} ism = ${ism} "
-    echo `date`
-    mpirun -np 16 --mca btl ^openib ${colanewgpu}$exe <<EOF >> ${reportfile}
+    echo 'starting '`date`
+    mpirun -np 8 --mca btl ^openib ${colanewgpu}$exe <<EOF >> ${reportfile}
 ${curdir}${jobid}
 EOF
 
@@ -79,5 +78,6 @@ ${jobid}
 EOF
 	exit 1
     endif
+    echo 'finished '`date`
 
-ssh -x a1193348@${mach} "python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'threeptcorr' $ism $tsink $Projector $DS "
+python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'threeptcorr' $ism $tsink $Projector $DS

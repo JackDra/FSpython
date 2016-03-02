@@ -1,7 +1,7 @@
 #! /bin/tcsh
-#SBATCH -A a1193348
 #SBATCH -p batch
 #SBATCH -n 16
+#SBATCH --gres=gpu:0
 #SBATCH --time=5:00:00
 #SBATCH --mem=55GB
 
@@ -44,10 +44,10 @@ endif
 set reportfolder = /data/cssm/jdragos/reports/${mach}/
 set reportfile = ${reportfolder}${jobid}.out
 
-    rm ${reportfile}
-    mkdir -p ${reportfolder}
+    mkdir -p ${reportfile}
+    rm ${reportfile} -rf
     echo "cfg = ${icfg}, ism = ${ism}, mpirun 2 point Corr"
-    echo `date`
+    echo 'starting '`date`
      mpirun -np 16 ${gencfeff}${exe} <<EOF > $reportfile
 ${curdir}${jobid}
 EOF
@@ -62,5 +62,6 @@ ${jobid}
 EOF
 	exit 1
      endif
+    echo 'finished '`date`
 
-ssh -x a1193348@${mach} "python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'twoptcorr' $ism "
+python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'twoptcorr' $ism

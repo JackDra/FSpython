@@ -122,6 +122,7 @@ def Create2ptCorrFiles(folder,fileprefix,icfg,thisgfosnum,thisismlist):
         f.close()
         
         f = open(thisfile+'.mom','w')
+        f.write(str(len(thisqlist))+'\n')
         for iq in thisqlist:
             f.write(iq+'\n')
         f.close()

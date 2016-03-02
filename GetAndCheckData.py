@@ -44,6 +44,7 @@ def RemoveProp(icfg,thisgfosnum,thisismlist):
 
 def Move2ptCorr(icfg,thisgfosnum,thisismlist,thisjsmlist):
     for ism in thisismlist:
+        map(mkdir_p,Get2ptCorrFolders(icfg,thisgfosnum,ism,jsmlist))
         for jsm in thisjsmlist:
             thisoutfile = Get2ptCorrOutput(icfg,thisgfosnum,ism,jsm)
             thisfile = Get2ptCorr(icfg,thisgfosnum,ism,jsm)
