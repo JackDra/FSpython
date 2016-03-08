@@ -58,7 +58,8 @@ WriteProp = 'T'
 
 # SST Propagator Parameters
 # it_sst = '32 35 38' ## ahnialation parameters (momenta)
-it_sst = [26, 27, 28, 29, 30] ## ahnialation parameters (momenta)
+it_sst = [26, 27, 28] ## ahnialation parameters (momenta)
+# it_sst = [26, 27, 28, 29, 30] ## ahnialation parameters (momenta)
 TSstart = 26
 ppvec = [0,0,0]
 qmin = 0

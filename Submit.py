@@ -11,12 +11,18 @@ import subprocess
 if len(sys.argv) != 3:
     raise IOError('Please give set number and number of processors')
 
-thisgfosnum = int(sys.argv[1])
-nproc = int(sys.argv[2])
+if sys.argv[2] == 'a':
+    thisgfosnum = range(1,10)
+else:
+    thisgfosnum = map(int,sys.argv[2:])
+nproc = int(sys.argv[1])
 
-thiscfglist = CreateCfgList(thisgfosnum)
+nproc = nproc/len(thisgfosnum)
 
-cfgintervals = GetIcfgTOFcfg(nproc,len(thiscfglist))
 
-for icfg,fcfg in cfgintervals:
-    RunNext(icfg,fcfg,thisgfosnum,Start=True)
+for igfos in thisgfosnum:
+    thiscfglist = CreateCfgList(igfos)
+    cfgintervals = GetIcfgTOFcfg(nproc,len(thiscfglist))
+    for icfg,fcfg in cfgintervals:
+        print 'Submitting source'+str(igfos)+' icfg='+str(icfg)+' fcfg='+str(fcfg)
+        RunNext(icfg,fcfg,igfos,Start=True)

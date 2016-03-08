@@ -46,20 +46,26 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Proj
         Remove3ptCorrFiles(FortFolder,FortFileFlag,icfg,gfos,[ism],[DS],[Projector],[tsink])    
         
     #check if whole run is done
-    if Check2ptCorr(icfg,gfos,ismlist,jsmlist) and Check3ptCorr(icfg,gfos,ismlist,it_sst,ProjectorList,DSList):
-        RemoveProp(icfg,gfos,ismlist)
-        RemoveGaugeField(icfg,gfos)
-        if icfg<fcfg:
-            RunNext(icfg+1,fcfg,gfos,Start=True)
+    
+    if Check2ptCorr(icfg,gfos,[ism],jsmlist) and Check3ptCorr(icfg,gfos,[ism],it_sst,ProjectorList,DSList):
+        RemoveProp(icfg,gfos,[ism])
+        if ism == ismlist[-1]:
+            RemoveGaugeField(icfg,gfos)
+            if icfg<fcfg:
+                RunNext(icfg+1,fcfg,gfos,Start=True)
+                return 
+            else:
+                print 'All Complete'
         else:
-            print 'All Complete'
+            RunNext(icfg,fcfg,gfos,ism=ismlist[ismlist.index(ism)+1],Start=Start)
+            return
 
     GetGaugeField(icfg,gfos)
-    if not Start: 
-        stage,ism,tsink,Projector,DS = IncrementRun(stage,ism,tsink,Projector,DS)
+    Move2ptCorr(icfg,gfos,[ism],jsmlist)
+    prevism = ism
+    if not Start: stage,ism,tsink,Projector,DS = IncrementRun(stage,ism,tsink,Projector,DS)
         
     StillInc = True
-    prevism = ism
     while StillInc:
         StillInc = False
         if 'twoptprop' in stage:
@@ -84,14 +90,14 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Proj
         sbatchstring = ('sbatch -J '+Jstring+' --export=ALL,gfos='+str(gfos)+',ism='+str(ism)+
                         ',icfg='+str(icfg)+',fcfg='+str(fcfg)+',jobid='+str(thisjobid)+',mach='+str(thismachine)+' '+str(scriptdir)+'Run2ptProp.csh')
         print sbatchstring
-        subprocess.call(sbatchstring.split())
+        subprocess.call(sbatchstring.split(),cwd=basedir)
     elif 'twoptcorr' in stage:
         [thisjobid] = Create2ptCorrFiles(FortFolder,FortFileFlag,icfg,gfos,[ism])    
         Jstring = str(icfg)+'-'+str(fcfg)+'-S'+str(gfos)+'-sm'+str(ism)
         sbatchstring = ('sbatch -J '+Jstring+' --export=ALL,gfos='+str(gfos)+',ism='+str(ism)+
                         ',icfg='+str(icfg)+',fcfg='+str(fcfg)+',jobid='+str(thisjobid)+',mach='+str(thismachine)+' '+str(scriptdir)+'Run2ptCorr.csh')
         print sbatchstring
-        subprocess.call(sbatchstring.split())
+        subprocess.call(sbatchstring.split(),cwd=basedir)
     elif 'threeptcorr' in stage:
         [thisjobid] = Create3ptCorrFiles(FortFolder,FortFileFlag,icfg,gfos,[ism],[DS],[Projector],[tsink])    
         mkdir_p(Get3ptCorrFolder(icfg,gfos,ism,tsink,Projector,DS))
@@ -100,7 +106,7 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Proj
                         ',tsink='+str(tsink)+',Projector='+str(Projector)+',DS='+str(DS)+
                         ',icfg='+str(icfg)+',fcfg='+str(fcfg)+',jobid='+str(thisjobid)+',mach='+str(thismachine)+' '+str(scriptdir)+'Run3ptCorr.csh')
         print sbatchstring
-        subprocess.call(sbatchstring.split())
+        subprocess.call(sbatchstring.split(),cwd=basedir)
     elif 'Done' in stage:
         if icfg<fcfg:
             RunNext(icfg+1,fcfg,gfos,Start=True)

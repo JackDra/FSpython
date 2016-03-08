@@ -29,7 +29,7 @@ def RemoveGaugeField(icfg,thisgfosnum):
         print 'Deleting: ' , gffile
         os.remove(gffile)
     else:
-        print gffile , ' not present'
+        # print gffile , ' not present'
 
 
 def RemoveProp(icfg,thisgfosnum,thisismlist):
@@ -38,8 +38,9 @@ def RemoveProp(icfg,thisgfosnum,thisismlist):
         if os.path.isfile(thisfile):
             print 'Removing: ',thisfile
             os.remove(thisfile)
+            if os.path.isfile(gffile+'.metadata'): os.remove(gffile+'.metadata')
         else:
-            print thisfile,' not present'
+            # print thisfile,' not present'
 
 
 def Move2ptCorr(icfg,thisgfosnum,thisismlist,thisjsmlist):
