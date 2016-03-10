@@ -57,7 +57,7 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Proj
             else:
                 print 'All Complete'
         else:
-            RunNext(icfg,fcfg,gfos,ism=ismlist[ismlist.index(ism)+1],Start=Start)
+            RunNext(icfg,fcfg,gfos,ism=ismlist[ismlist.index(ism)+1],Start=True)
             return
 
     GetGaugeField(icfg,gfos)

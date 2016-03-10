@@ -28,7 +28,7 @@ def RemoveGaugeField(icfg,thisgfosnum):
     if os.path.isfile(gffile):
         print 'Deleting: ' , gffile
         os.remove(gffile)
-    else:
+    # else:
         # print gffile , ' not present'
 
 
@@ -38,8 +38,8 @@ def RemoveProp(icfg,thisgfosnum,thisismlist):
         if os.path.isfile(thisfile):
             print 'Removing: ',thisfile
             os.remove(thisfile)
-            if os.path.isfile(gffile+'.metadata'): os.remove(gffile+'.metadata')
-        else:
+            if os.path.isfile(thisfile+'.metadata'): os.remove(thisfile+'.metadata')
+        # else:
             # print thisfile,' not present'
 
 
