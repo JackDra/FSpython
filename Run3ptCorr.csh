@@ -1,9 +1,9 @@
 #! /bin/tcsh
 #SBATCH -p batch
-#SBATCH -n 8
-#SBATCH --time=10:00:00
-#SBATCH --gres=gpu:1
-#SBATCH --mem=55GB
+#SBATCH -n 16
+#SBATCH --time=5:00:00
+#SBATCH --gres=gpu:4
+#SBATCH --mem=120GB
 
 module load intel/2015c
 module load OpenMPI/1.8.8-iccifort-2015.3.187
