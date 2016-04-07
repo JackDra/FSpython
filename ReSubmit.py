@@ -56,6 +56,7 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Proj
                 return 
             else:
                 print 'All Complete'
+                return
         else:
             RunNext(icfg,fcfg,gfos,ism=ismlist[ismlist.index(ism)+1],Start=True)
             return
