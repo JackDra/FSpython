@@ -12,7 +12,7 @@ def mkdir_p(path):
             pass
         else: raise
 
-thismachine = 'phoenix'
+thismachine = 'phoenixnew'
 
 #james prop gf source index parameter
 SRCX = [ 0, 16,  0, 16,  0,  0, 16, 16, 16, 16 ]#0  0  0 16  0 16 )

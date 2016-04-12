@@ -62,7 +62,7 @@ set reportfile = ${reportfolder}${jobid}.out
     mkdir -p ${reportfile}
     rm ${reportfile} -rf
     echo 'starting '`date`
-    mpirun -np 16 --mca btl ^openib ${colanewgpu}$exe <<EOF > ${reportfile}
+    mpirun -np 8 --mca btl ^openib ${colanewgpu}$exe <<EOF > ${reportfile}
 ${curdir}${jobid}
 EOF
 
