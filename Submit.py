@@ -8,14 +8,25 @@ from ReSubmit import RunNext
 import sys
 import subprocess
 
-if len(sys.argv) != 3:
-    raise IOError('Please give set number and number of processors')
+thisgfosnum = range(1,10)
+nproc = -1
+for iin in sys.argv[1:]:
+    if '-np=' in iin:
+        nproc = int(iin.replace('-np=',''))
+    elif '-s=' in iin:
+        thisgfosnum = map(int,iin.replace('-s=','').split(','))
 
-if sys.argv[2] == 'a':
-    thisgfosnum = range(1,10)
-else:
-    thisgfosnum = map(int,sys.argv[2:])
-nproc = int(sys.argv[1])
+if nproc == -1:
+    raise IOError('please give number of processors as -np=## ')
+    
+print 'Sources = ' , ','.join(map(str,thisgfosnum))
+print 'Number of processors = ' , nproc
+
+# if sys.argv[2] == 'a':
+#     thisgfosnum = range(1,10)
+# else:
+#     thisgfosnum = map(int,sys.argv[2:])
+# nproc = int(sys.argv[1])
 
 nproc = nproc/len(thisgfosnum)
 

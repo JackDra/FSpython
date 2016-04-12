@@ -12,7 +12,7 @@ def mkdir_p(path):
             pass
         else: raise
 
-thismachine = 'phoenixnew'
+thismachine = 'phoenix'
 
 #james prop gf source index parameter
 SRCX = [ 0, 16,  0, 16,  0,  0, 16, 16, 16, 16 ]#0  0  0 16  0 16 )
@@ -162,7 +162,10 @@ def CreateCfdir3pt(gfosnum):
 
 def CreateGFnum(icfg,gfosnum):
     with open(filelists+CreateCfgFilename(gfosnum),'r') as f:
-        thisgfnum = f.readlines()[icfg].replace('\n','')
+        thisfile = f.readlines()
+        if len(thisfile) <= icfg:
+            icfg = len(thisfile)-1
+        thisgfnum = thisfile[icfg].replace('\n','')
     return thisgfnum
 
 def CreateCfg(icfg,gfosnum):

@@ -64,7 +64,7 @@ set reportfile = ${reportfolder}${jobid}.out
     rm ${reportfile} -rf
     echo "mpirun 3 point GMA${Projector} ${DS}, tsink = ${tsink} ism = ${ism} "
     echo 'starting '`date`
-    mpirun -np 8 --mca btl ^openib ${colanewgpu}$exe <<EOF >> ${reportfile}
+    mpirun -np 16 --mca btl ^openib ${colanewgpu}$exe <<EOF >> ${reportfile}
 ${curdir}${jobid}
 EOF
 

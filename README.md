@@ -8,12 +8,3 @@ Check SLURM submission parameters for:
       
       Run2ptProp.csh, Run2ptCorr.csh and Run3ptCorr.csh
 
-need to change in above:
- 
-	#SLURM  headers
-	module load stuff
-	curdir
-	colanewgpu
-	reportfolder
-	
-
