@@ -89,14 +89,14 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Proj
         [thisjobid] = Create2ptPropFiles(FortFolder,FortFileFlag,icfg,gfos,[ism])    
         Jstring = str(icfg)+'-'+str(fcfg)+'-S'+str(gfos)+'-sm'+str(ism)
         sbatchstring = ('sbatch -J '+Jstring+' --export=ALL,gfos='+str(gfos)+',ism='+str(ism)+
-                        ',icfg='+str(icfg)+',fcfg='+str(fcfg)+',jobid='+str(thisjobid)+',mach='+str(thismachine)+' '+str(scriptdir)+'Run2ptProp.csh')
+                        ',icfg='+str(icfg)+',fcfg='+str(fcfg)+',jobid='+str(thisjobid)+',mach='+str(thismachine)+' '+str(scriptdir)+'Run2ptProp'+thismachine+'.csh')
         print sbatchstring
         subprocess.call(sbatchstring.split(),cwd=basedir)
     elif 'twoptcorr' in stage:
         [thisjobid] = Create2ptCorrFiles(FortFolder,FortFileFlag,icfg,gfos,[ism])    
         Jstring = str(icfg)+'-'+str(fcfg)+'-S'+str(gfos)+'-sm'+str(ism)
         sbatchstring = ('sbatch -J '+Jstring+' --export=ALL,gfos='+str(gfos)+',ism='+str(ism)+
-                        ',icfg='+str(icfg)+',fcfg='+str(fcfg)+',jobid='+str(thisjobid)+',mach='+str(thismachine)+' '+str(scriptdir)+'Run2ptCorr.csh')
+                        ',icfg='+str(icfg)+',fcfg='+str(fcfg)+',jobid='+str(thisjobid)+',mach='+str(thismachine)+' '+str(scriptdir)+'Run2ptCorr'+thismachine+'.csh')
         print sbatchstring
         subprocess.call(sbatchstring.split(),cwd=basedir)
     elif 'threeptcorr' in stage:
@@ -105,7 +105,7 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Proj
         Jstring = str(icfg)+'-'+str(fcfg)+'-S'+str(gfos)+'-sm'+str(ism)+'-ts'+str(tsink)+'-P'+str(Projector)+'-'+DS[0]
         sbatchstring = ('sbatch -J '+Jstring+' --export=ALL,gfos='+str(gfos)+',ism='+str(ism)+
                         ',tsink='+str(tsink)+',Projector='+str(Projector)+',DS='+str(DS)+
-                        ',icfg='+str(icfg)+',fcfg='+str(fcfg)+',jobid='+str(thisjobid)+',mach='+str(thismachine)+' '+str(scriptdir)+'Run3ptCorr.csh')
+                        ',icfg='+str(icfg)+',fcfg='+str(fcfg)+',jobid='+str(thisjobid)+',mach='+str(thismachine)+' '+str(scriptdir)+'Run3ptCorr'+thismachine+'.csh')
         print sbatchstring
         subprocess.call(sbatchstring.split(),cwd=basedir)
     elif 'Done' in stage:
