@@ -1,16 +1,14 @@
 #! /bin/tcsh
 
-#SBATCH -A cssm
-#SBATCH -p gpuq
-#SBATCH -n 8
-#SBATCH --time=20:00:00
-#SBATCH --gres=gpu:4
-#SBATCH --mem=100GB
+#SBATCH -p batch
+#SBATCH -n 16
+#SBATCH --gres=gpu:0
+#SBATCH --time=5:00:00
+#SBATCH --mem=55GB
 
-module load cuda/6.0
-# module load intel/2015c
-# module load OpenMPI/1.8.8-iccifort-2015.3.187
-# module load CUDA/7.0.28
+module load intel/2015c
+module load OpenMPI/1.8.8-iccifort-2015.3.187
+module load CUDA/7.0.28
 
 set curdir = /home/a1193348/Scripts/FSpython/
 cd ${curdir}
