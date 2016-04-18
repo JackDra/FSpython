@@ -17,10 +17,16 @@ THISMACHINE = socket.gethostname()
 
 if '.rc' in THISMACHINE:
     thismachine = 'phoenixold'
+    basedir = '/home/a1193348/'
+    scratchdir = '/data/cssm/jdragos/'
 elif 'phoenix' in THISMACHINE:
     thismachine = 'phoenix'
+    basedir = '/home/a1193348/'
+    scratchdir = '/data/cssm/jdragos/'
 elif 'isaac' in THISMACHINE:
     thismachine = 'isaac'
+    basedir = '/home/a1193348/'
+    scratchdir = '/data/jdragos/'
 else:
     raise EnvironmentError(THISMACHINE + ' is not recognised, add to RunParams.py if statement')
     exit()
@@ -129,8 +135,6 @@ limename = 'qcdsf'
 ensemble = 'b5p50kp'+str(kud)+'0kp'+str(ks)+'0'
 
 #### configuration/file parameters
-basedir = '/home/a1193348/'
-scratchdir = '/data/cssm/jdragos/'
 scriptdir = basedir+'Scripts/FSpython/'
 datadir = scratchdir
 FortFolderPref = 'FortFiles'
