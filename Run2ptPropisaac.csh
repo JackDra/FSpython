@@ -1,19 +1,19 @@
 #! /bin/tcsh
 
+#SBATCH -A a1193348
 #SBATCH -p batch
 #SBATCH -n 16
-#SBATCH --time=5:00:00
+#SBATCH --time=20:00:00
 #SBATCH --gres=gpu:4
-#SBATCH --mem=120GB
+#SBATCH --mem=55GB
 
-module load intel/2015c
-module load OpenMPI/1.8.8-iccifort-2015.3.187
-module load CUDA/7.0.28
-
+module load openmpi-uofa-intel
+module load cuda/6.0
+ 
 set curdir = /home/a1193348/Scripts/FSpython/
 cd ${curdir}
 set colanewgpu = /home/a1193348/code/cola/jfsmNew_w2/cuda/
-set exe = quarkpropGPU.x 
+set exe = quarkpropGPU.x
 
 
 #  If variable icfg is not set, then exit
