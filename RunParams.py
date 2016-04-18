@@ -21,6 +21,9 @@ elif 'phoenix' in THISMACHINE:
     thismachine = 'phoenix'
 elif 'isaac' in THISMACHINE:
     thismachine = 'isaac'
+else:
+    raise EnvironmentError(THISMACHINE + ' is not recognised, add to RunParams.py if statement')
+    exit()
 
 #james prop gf source index parameter
 SRCX = [ 0, 16,  0, 16,  0,  0, 16, 16, 16, 16 ]#0  0  0 16  0 16 )
