@@ -38,7 +38,8 @@ def RemoveProp(icfg,thisgfosnum,thisismlist):
         if os.path.isfile(thisfile):
             print 'Removing: ',thisfile
             os.remove(thisfile)
-            if os.path.isfile(thisfile+'.metadata'): os.remove(thisfile+'.metadata')
+        if os.path.isfile(thisfile+'.metadata'): 
+            os.remove(thisfile+'.metadata')
         # else:
             # print thisfile,' not present'
 
