@@ -50,7 +50,7 @@ if (! $?mach) then
 endif
 
 
-set reportfolder = /data/jdragos/reports/${mach}/
+set reportfolder = /data/cssm/jdragos/reports/${mach}/
 set reportfile = ${reportfolder}${jobid}.out
 
 
