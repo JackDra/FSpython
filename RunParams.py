@@ -31,6 +31,8 @@ else:
     raise EnvironmentError(THISMACHINE + ' is not recognised, add to RunParams.py if statement')
     exit()
 
+OnlyTwoPt = True ## Only calculates two-point correlation functions.
+
 #james prop gf source index parameter
 SRCX = [ 0, 16,  0, 16,  0,  0, 16, 16, 16, 16 ]#0  0  0 16  0 16 )
 SRCY = [ 0, 16,  0,  0, 16, 16,  0,  0, 16, 16 ]#0 16 16  0  0 16 )
@@ -63,8 +65,12 @@ PropFormat = 'ifms' #propagator format
 ParrIO = 'F' # parrallel io
 # kud = 12104 # kappa (quark hopping) params
 # ks = 12062
-kud = 12090 # kappa (quark hopping) params
-ks = 12090
+# kud = 12090 # kappa (quark hopping) params
+# ks = 12090
+# kud = 121095 # kappa (quark hopping) params
+# ks = 120512
+kud = 12109 # kappa (quark hopping) params
+ks = 12051
 SourceType = 3 ## regular source smeared propagator
 Prec = '1.0d-5'
 # Projector = 4
@@ -76,6 +82,7 @@ WriteProp = 'T'
 # SST Propagator Parameters
 # it_sst = '32 35 38' ## ahnialation parameters (momenta)
 it_sst = [26, 27, 28] ## ahnialation parameters (momenta)
+# it_sst = [23, 24, 25] ## ahnialation parameters (momenta)
 # it_sst = [26, 27, 28, 29, 30] ## ahnialation parameters (momenta)
 TSstart = 26
 ppvec = [0,0,0]
@@ -132,7 +139,8 @@ ijmu = 0
 
 # Configuration data
 limename = 'qcdsf'
-ensemble = 'b5p50kp'+str(kud)+'0kp'+str(ks)+'0'
+# ensemble = 'b5p50kp'+str(kud)+'0kp'+str(ks)+'0'
+ensemble = 'b5p50kp'+str(kud)+'5kp'+str(ks)+'2'
 
 #### configuration/file parameters
 scriptdir = basedir+'Scripts/FSpython/'
@@ -145,7 +153,8 @@ gfdir = scratchdir+'/gaugefields/'+ensemble+'/'
 # rdsigfdir = '/data/jzanotti/confs/32x64/b5p50kp121040kp120620/'
 # rdsigfdir = scratchdir+'/gaugefields/limes/
 # ##for heavier kappa
-rdsigfdir = scratchdir+'/gaugefields/qcdsf.655/'
+# rdsigfdir = scratchdir+'/gaugefields/qcdsf.655/'
+rdsigfdir = '/data/cssm/jzanotti/confs/32x64/'+ensemble+'/'
 # gfdir = '/rdsi/PACS-CS/ensemble+'/'
 qpdir = scratchdir+'/qprops/k'+str(kud)+'/'+PropFormat+'/'
 cfdir = scratchdir+'/cfun/2ndk'+str(kud)+'/'

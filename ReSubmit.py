@@ -14,8 +14,15 @@ def IncrementRun(stage,ism,tsink,Projector,DS):
         stage = 'twoptcorr'
         return [stage,ism]+DefParams
     if 'twoptcorr' in stage:
-        stage = 'threeptcorr'
-        return [stage,ism]+DefParams
+        if OnlyTwoPt:
+            if ism == ismlist[-1]:
+                stage,ism,tsink,Projector,DS = ['Done',ismlist[0]]+DefParams
+            else:
+                stage,ism,tsink,Projector,DS = ['twoptprop',ismlist[ismlist.index(ism)+1]]+DefParams
+            return stage,ism,tsink,Projector,DS
+        else:
+            stage = 'threeptcorr'
+            return [stage,ism]+DefParams
     if 'threeptcorr' in stage:
         if tsink == it_sst[-1]:
             if Projector == ProjectorList[-1]:
@@ -47,7 +54,11 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Proj
         
     #check if whole run is done
     
-    if Check2ptCorr(icfg,gfos,[ism],jsmlist) and Check3ptCorr(icfg,gfos,[ism],it_sst,ProjectorList,DSList):
+    if OnlyTwoPt:
+        boolcheck = Check2ptCorr(icfg,gfos,[ism],jsmlist)
+    else:
+        boolcheck = Check2ptCorr(icfg,gfos,[ism],jsmlist) and Check3ptCorr(icfg,gfos,[ism],it_sst,ProjectorList,DSList)
+    if boolcheck:
         RemoveProp(icfg,gfos,[ism])
         if ism == ismlist[-1]:
             RemoveGaugeField(icfg,gfos)
@@ -77,7 +88,7 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Proj
             Move2ptCorr(icfg,gfos,[ism],jsmlist)
             if Check2ptCorr(icfg,gfos,[ism],jsmlist):
                 stage,ism,tsink,Projector,DS = IncrementRun(stage,ism,tsink,Projector,DS)
-                StillInc = True
+                if 'Done' not in stage: StillInc = True
         elif 'threeptcorr' in stage:
             if Check3ptCorr(icfg,gfos,[ism],[tsink],[Projector],[DS]):
                 stage,ism,tsink,Projector,DS = IncrementRun(stage,ism,tsink,Projector,DS)
