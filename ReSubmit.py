@@ -42,7 +42,7 @@ def IncrementRun(stage,ism,tsink,Projector,DS):
             tsink = it_sst[it_sst.index(tsink)+1]
         return stage,ism,tsink,Projector,DS
 
-def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Projector=ProjectorList[0],DS=DSList[0],Start=False):
+def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],Failed='Success',tsink=it_sst[0],Projector=ProjectorList[0],DS=DSList[0],Start=False):
     icfg,fcfg,gfos,ism,tsink,Projector = map(int,[icfg,fcfg,gfos,ism,tsink,Projector])
     #removes fort parameter files
     if 'twoptprop' in stage:
@@ -58,7 +58,7 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],tsink=it_sst[0],Proj
         boolcheck = Check2ptCorr(icfg,gfos,[ism],jsmlist)
     else:
         boolcheck = Check2ptCorr(icfg,gfos,[ism],jsmlist) and Check3ptCorr(icfg,gfos,[ism],it_sst,ProjectorList,DSList)
-    if boolcheck:
+    if boolcheck or Failed == 'Failed':
         RemoveProp(icfg,gfos,[ism])
         if ism == ismlist[-1]:
             RemoveGaugeField(icfg,gfos)
