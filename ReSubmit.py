@@ -68,10 +68,10 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],Failed='Success',tsi
         
 
     if OnlyTwoPt:
-        boolcheck = Check2ptCorr(icfg,gfos,[ism],jsmlist_
+        boolcheck = Check2ptCorr(icfg,gfos,[ism],jsmlist)
     else:
         boolcheck = Check2ptCorr(icfg,gfos,[ism],jsmlist) and Check3ptCorr(icfg,gfos,[ism],it_sst,ProjectorList,DSList)
-    if boolcheck :
+    if boolcheck:
         RemoveProp(icfg,gfos,[ism])
         if ism == ismlist[-1]:
             RemoveGaugeField(icfg,gfos)
