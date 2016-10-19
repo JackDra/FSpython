@@ -54,11 +54,24 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],Failed='Success',tsi
         
     #check if whole run is done
     
+    if Failed == 'Failed':
+        RemoveProp(icfg,gfos,ismlist)
+        RemoveGaugeField(icfg,gfos)
+        Remove2ptCorr(icfg,gfos,ismlist,jsmlist)
+        Remove3ptCorr(icfg,gfos,ismlist,it_sst,Projectorlist,DSlist)
+        if icfg<fcfg:
+            RunNext(icfg+1,fcfg,gfos,Start=True)
+            return 
+        else:
+            print 'All Complete'
+            return
+        
+
     if OnlyTwoPt:
-        boolcheck = Check2ptCorr(icfg,gfos,[ism],jsmlist)
+        boolcheck = Check2ptCorr(icfg,gfos,[ism],jsmlist_
     else:
         boolcheck = Check2ptCorr(icfg,gfos,[ism],jsmlist) and Check3ptCorr(icfg,gfos,[ism],it_sst,ProjectorList,DSList)
-    if boolcheck or Failed == 'Failed':
+    if boolcheck :
         RemoveProp(icfg,gfos,[ism])
         if ism == ismlist[-1]:
             RemoveGaugeField(icfg,gfos)
