@@ -1,9 +1,10 @@
 #! /bin/tcsh
 #SBATCH -p batch
-#SBATCH -n 16
+#SBATCH -n 8
 #SBATCH --time=5:00:00
 #SBATCH --gres=gpu:4
-#SBATCH --mem=120GB
+#SBATCH --mem=48GB
+#SBATCH --qos=gxl
 
 module load intel/2015c
 module load OpenMPI/1.8.8-iccifort-2015.3.187
@@ -59,8 +60,8 @@ set reportfile = ${reportfolder}${jobid}.out
     mkdir -p ${reportfile}
     rm ${reportfile} -rf
     echo 'starting '`date`
-    # mpirun -np 16 --mca btl ^openib ${colanewgpu}$exe <<EOF > ${reportfile}
-    mpirun -np 16 ${colanewgpu}$exe <<EOF > ${reportfile}
+    # mpirun -np 8 --mca btl ^openib ${colanewgpu}$exe <<EOF > ${reportfile}
+    mpirun -np 8 ${colanewgpu}$exe <<EOF > ${reportfile}
 ${curdir}${jobid}
 EOF
 

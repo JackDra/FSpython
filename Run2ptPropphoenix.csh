@@ -1,10 +1,10 @@
 #! /bin/tcsh
-
 #SBATCH -p batch
-#SBATCH -n 16
+#SBATCH -n 8
 #SBATCH --time=5:00:00
 #SBATCH --gres=gpu:4
-#SBATCH --mem=120GB
+#SBATCH --mem=48GB
+#SBATCH --qos=gxl
 
 module load intel/2015c
 module load OpenMPI/1.8.8-iccifort-2015.3.187
@@ -13,6 +13,7 @@ module load CUDA/7.0.28
 set curdir = /home/a1193348/Scripts/FSpython/
 cd ${curdir}
 set colanewgpu = /home/a1193348/code/cola/jfsmNew_w2/cuda/
+# set colanewgpu = /home/a1193348/code/cola/cola/cuda/
 set exe = quarkpropGPU.x 
 
 
@@ -60,8 +61,9 @@ set reportfile = ${reportfolder}${jobid}.out
     mkdir -p ${reportfile}
     rm ${reportfile} -rf
     echo 'starting '`date`
-    # mpirun -np 16 --mca btl ^openib ${colanewgpu}$exe <<EOF > ${reportfile}
-    mpirun -np 16 ${colanewgpu}$exe <<EOF > ${reportfile}
+    # mpirun -np 8 --mca btl ^openib ${colanewgpu}$exe <<EOF > ${reportfile}
+    echo "mpirun -np 8 ${colanewgpu}$exe --solver=CGNE+S ${reportfile}"
+    mpirun -np 8 ${colanewgpu}$exe --solver='CGNE+S' <<EOF > ${reportfile}
 ${curdir}${jobid}
 EOF
 
@@ -70,11 +72,12 @@ EOF
 	echo "Error with: ${jobid}"
 	echo ""
 
-cat <<EOF >> ${curdir}errlist.2ptprop
-${curdir}${jobid}
-EOF
-	exit 1
+	python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'twoptprop' $ism 'Failed'
+	cat <<EOF >> ${curdir}errlist.2ptprop
+	${curdir}${jobid}
+	EOF
+	# exit 1
     endif
     echo 'finished '`date`
 
-python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'twoptprop' $ism
+python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'twoptprop' $ism 'Complete'

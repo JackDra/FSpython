@@ -1,7 +1,6 @@
 #! /bin/tcsh
 #SBATCH -p batch
 #SBATCH -n 16
-#SBATCH --gres=gpu:0
 #SBATCH --time=5:00:00
 #SBATCH --mem=55GB
 
@@ -57,11 +56,12 @@ EOF
 	echo "Error with: ${jobid}"
 	echo ""
 
-cat <<EOF >> ${curdir}errlist.2ptcorr
-${jobid}
-EOF
+	python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'twoptcorr' $ism 'Failed'
+	cat <<EOF >> ${curdir}errlist.2ptcorr
+	${jobid}
+	EOF
 	exit 1
      endif
     echo 'finished '`date`
 
-python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'twoptcorr' $ism
+python ${curdir}ReSubmit.py $icfg $fcfg $gfos 'twoptcorr' $ism 'Complete'

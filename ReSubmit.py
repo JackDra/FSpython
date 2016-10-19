@@ -55,10 +55,11 @@ def RunNext(icfg,fcfg,gfos,stage='twoptprop',ism=ismlist[0],Failed='Success',tsi
     #check if whole run is done
     
     if Failed == 'Failed':
+        print 'Error with Configuration ' + str(icfg) + ' source ' + str(gfos)
         RemoveProp(icfg,gfos,ismlist)
         RemoveGaugeField(icfg,gfos)
         Remove2ptCorr(icfg,gfos,ismlist,jsmlist)
-        Remove3ptCorr(icfg,gfos,ismlist,it_sst,Projectorlist,DSlist)
+        Remove3ptCorr(icfg,gfos,ismlist,it_sst,ProjectorList,DSList)
         if icfg<fcfg:
             RunNext(icfg+1,fcfg,gfos,Start=True)
             return 

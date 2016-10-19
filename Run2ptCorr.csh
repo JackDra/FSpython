@@ -1,7 +1,6 @@
 #! /bin/tcsh
 #SBATCH -p batch
 #SBATCH -n 16
-#SBATCH --gres=gpu:0
 #SBATCH --time=5:00:00
 #SBATCH --mem=55GB
 
@@ -48,7 +47,7 @@ set reportfile = ${reportfolder}${jobid}.out
     rm ${reportfile} -rf
     echo "cfg = ${icfg}, ism = ${ism}, mpirun 2 point Corr"
     echo 'starting '`date`
-     mpirun -np 16 ${gencfeff}${exe} <<EOF > $reportfile
+     mpirun -np 16 ${gencfeff}${exe}  <<EOF > $reportfile
 ${curdir}${jobid}
 EOF
 
